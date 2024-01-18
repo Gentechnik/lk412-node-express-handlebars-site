@@ -3,6 +3,7 @@ import * as config from "./config";
 import path from "path";
 import * as model from "./model";
 import { engine } from "express-handlebars";
+import Handlebars from "handlebars";
 
 const app = express();
 const baseDir = process.cwd();
@@ -49,4 +50,8 @@ app.get("*", (req, res) => {
 
 app.listen(config.getPort(), () => {
 	console.log(`Listening at http://localhost:${config.getPort()}`);
+});
+
+Handlebars.registerHelper("ifEquals", (arg1, arg2, options) => {
+	return arg1 === arg2 ? options.fn(this) : options.inverse(this);
 });
